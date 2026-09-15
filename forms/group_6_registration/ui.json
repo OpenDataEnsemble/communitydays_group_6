@@ -1,0 +1,20 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/name",
+      "label": "Place name"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/neighbourhood",
+      "label": "Neighbourhood"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/kind",
+      "label": "Type of place"
+    }
+  ]
+}

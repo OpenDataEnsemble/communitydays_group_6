@@ -1,0 +1,55 @@
+{
+  "title": "Urban life in Kampala App",
+  "theme": "Urban life in Kampala",
+  "entity": "community place",
+  "plural": "community places",
+  "registerLabel": "Register community place",
+  "followUpLabel": "Record a place visit",
+  "registrationForm": "group_6_registration",
+  "followUpForm": "group_6_followup",
+  "description": "Discover Kampala through its markets, parks and neighbourhood meeting places.",
+  "accent": "#885718",
+  "background": "#fff8e6",
+  "columns": [
+    {
+      "key": "name",
+      "label": "Place name"
+    },
+    {
+      "key": "neighbourhood",
+      "label": "Neighbourhood"
+    },
+    {
+      "key": "kind",
+      "label": "Type of place"
+    }
+  ],
+  "registrationFields": [
+    {
+      "key": "name",
+      "label": "Place name"
+    },
+    {
+      "key": "neighbourhood",
+      "label": "Neighbourhood"
+    },
+    {
+      "key": "kind",
+      "label": "Type of place"
+    }
+  ],
+  "followUpFields": [
+    {
+      "key": "activity",
+      "label": "How busy is it?"
+    },
+    {
+      "key": "access",
+      "label": "Easy to access?"
+    },
+    {
+      "key": "notes",
+      "label": "What did you notice?"
+    }
+  ]
+}

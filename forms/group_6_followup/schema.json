@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "activity": {
+      "type": "string",
+      "enum": [
+        "Quiet",
+        "Lively",
+        "Very busy"
+      ],
+      "title": "How busy is it?"
+    },
+    "access": {
+      "type": "string",
+      "enum": [
+        "Yes",
+        "Partly",
+        "No"
+      ],
+      "title": "Easy to access?"
+    },
+    "notes": {
+      "type": "string",
+      "title": "What did you notice?",
+      "minLength": 1,
+      "maxLength": 240
+    },
+    "entity_id": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "entity_id",
+    "activity",
+    "access",
+    "notes"
+  ]
+}

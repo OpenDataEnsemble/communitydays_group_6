@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Place name",
+      "minLength": 1,
+      "maxLength": 240
+    },
+    "neighbourhood": {
+      "type": "string",
+      "title": "Neighbourhood",
+      "minLength": 1,
+      "maxLength": 240
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "Market",
+        "Park",
+        "Meeting place",
+        "Other"
+      ],
+      "title": "Type of place"
+    }
+  },
+  "required": [
+    "name",
+    "neighbourhood",
+    "kind"
+  ]
+}

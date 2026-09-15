@@ -1,0 +1,20 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/activity",
+      "label": "How busy is it?"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/access",
+      "label": "Easy to access?"
+    },
+    {
+      "type": "Control",
+      "scope": "#/properties/notes",
+      "label": "What did you notice?"
+    }
+  ]
+}
