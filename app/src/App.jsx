@@ -30,7 +30,6 @@ function RecordPage() {
 
   const { entityId } = useParams();
   const { api, registrations, followUps, loading, error, formError, opening, refresh, openForm } = useObservations(entityId);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const record = registrations.find((item) => item.observationId === entityId);
   const disabled = !api || opening;
@@ -183,7 +182,7 @@ function RecordPage() {
               )}
             </>
           ) : !loading && !error && api && (
-            <p className="empty">No {config.plural} yet. Select “{config.registerLabel}” to get started.</p>
+            <p className="empty">No {config.plural} yet. Select "{config.registerLabel}" to get started.</p>
           )
         ) : record ? (
           <>
