@@ -1,5 +1,5 @@
 {
-  "title": "Urban life in Kampala App",
+  "title": "KAMPULSE",
   "theme": "Urban life in Kampala",
   "entity": "community place",
   "plural": "community places",
@@ -7,9 +7,9 @@
   "followUpLabel": "Record a place visit",
   "registrationForm": "group_6_registration",
   "followUpForm": "group_6_followup",
-  "description": "Discover Kampala through its markets, parks and neighbourhood meeting places.",
-  "accent": "#885718",
-  "background": "#fff8e6",
+  "description": "Explore, connect, and learn about the places that make Kampala our community.",
+  "accent": "#1769AA",
+  "background": "#F1F7FC",
   "columns": [
     {
       "key": "name",
@@ -25,20 +25,24 @@
     }
   ],
   "registrationFields": [
-    {
-      "key": "name",
-      "label": "Place name"
-    },
-    {
-      "key": "neighbourhood",
-      "label": "Neighbourhood"
-    },
-    {
-      "key": "kind",
-      "label": "Type of place"
-    }
+  {
+    "key": "name",
+    "label": "Place name"
+  },
+  {
+    "key": "neighbourhood",
+    "label": "Neighbourhood"
+  },
+  {
+    "key": "kind",
+    "label": "Type of place"
+  },
+  {
+    "key": "description",
+    "label": "Short description"
+  }
   ],
-  "followUpFields": [
+    "followUpFields": [
     {
       "key": "activity",
       "label": "How busy is it?"
