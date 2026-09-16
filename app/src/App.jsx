@@ -29,37 +29,20 @@ function RecordPage() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const { entityId } = useParams();
+  const { api, registrations, followUps, loading, error, formError, opening, refresh, openForm } = useObservations(entityId);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const {
-    api,
-    registrations,
-    followUps,
-    loading,
-    error,
-    formError,
-    opening,
-    refresh,
-    openForm
-  } = useObservations(entityId);
-
-  const record = registrations.find(
-    (item) => item.observationId === entityId
-  );
-
+  const record = registrations.find((item) => item.observationId === entityId);
   const disabled = !api || opening;
 
-  const registrationFields = config.registrationFields.some(
-    ({ key }) => key === 'name'
-  )
+  const registrationFields = config.registrationFields.some(({ key }) => key === 'name')
     ? config.registrationFields
     : [{ key: 'name', label: 'Name' }, ...config.registrationFields];
 
-  const normalizedSearch = searchTerm.trim().toLowerCase();
+  const trimmedSearch = searchTerm.trim().toLowerCase();
 
   const filteredRegistrations = registrations.filter((item) =>
-    display(item.data?.name)
-      .toLowerCase()
-      .includes(normalizedSearch)
+    display(item.data?.name).toLowerCase().includes(trimmedSearch)
   );
 
   useEffect(() => {
@@ -148,77 +131,44 @@ function RecordPage() {
           </div>
         )}
 
-        {formError && (
-          <p className="error" role="alert">
-            Could not complete the form. {formError} Please try the form
-            button again.
-          </p>
-        )}
+        {formError && <p className="error" role="alert">Could not complete the form. {formError} Please try the form button again.</p>}
 
         {!entityId ? (
           registrations.length > 0 ? (
             <>
               <div className="search-box">
-                <label htmlFor="place-search">
-                  Search community places
-                </label>
-
+                <label htmlFor="place-search">Search community places</label>
                 <input
                   id="place-search"
                   type="search"
                   value={searchTerm}
-                  onChange={(event) =>
-                    setSearchTerm(event.target.value)
-                  }
+                  onChange={(event) => setSearchTerm(event.target.value)}
                   placeholder="Search by place name"
                 />
-
-                <p className="search-count" aria-live="polite">
-                  {filteredRegistrations.length} matching out of{' '}
-                  {registrations.length} registered
+                <p className="search-count">
+                  {filteredRegistrations.length} matching out of {registrations.length} registered
                 </p>
               </div>
 
               {filteredRegistrations.length > 0 ? (
-                <div
-                  className="table-scroll"
-                  role="region"
-                  aria-label={`${config.plural} list`}
-                  tabIndex={0}
-                >
+                <div className="table-scroll" role="region" aria-label={`${config.plural} list`} tabIndex={0}>
                   <table>
                     <caption>Saved {config.plural}</caption>
-
                     <thead>
                       <tr>
-                        {config.columns.map(({ key, label }) => (
-                          <th scope="col" key={key}>
-                            {label}
-                          </th>
-                        ))}
-
+                        {config.columns.map(({ key, label }) => <th scope="col" key={key}>{label}</th>)}
                         <th scope="col">Details</th>
                       </tr>
                     </thead>
-
                     <tbody>
                       {filteredRegistrations.map((item) => (
                         <tr key={item.observationId}>
-                          {config.columns.map(({ key }) => (
-                            <td key={key}>
-                              {display(item.data?.[key])}
-                            </td>
-                          ))}
-
+                          {config.columns.map(({ key }) => <td key={key}>{display(item.data?.[key])}</td>)}
                           <td>
                             <Link
                               className="detail-link"
-                              to={`/details/${encodeURIComponent(
-                                item.observationId
-                              )}`}
-                              aria-label={`View details for ${display(
-                                item.data?.name
-                              )}`}
+                              to={`/details/${encodeURIComponent(item.observationId)}`}
+                              aria-label={`View details for ${display(item.data?.name)}`}
                             >
                               View details →
                             </Link>
@@ -229,20 +179,11 @@ function RecordPage() {
                   </table>
                 </div>
               ) : (
-                <p className="empty">
-                  No {config.plural} match “{searchTerm.trim()}”.
-                </p>
+                <p className="empty">No community places match your search.</p>
               )}
             </>
-          ) : (
-            !loading &&
-            !error &&
-            api && (
-              <p className="empty">
-                No {config.plural} yet. Select “{config.registerLabel}”
-                to get started.
-              </p>
-            )
+          ) : !loading && !error && api && (
+            <p className="empty">No {config.plural} yet. Select “{config.registerLabel}” to get started.</p>
           )
         ) : record ? (
           <>
@@ -265,11 +206,7 @@ function RecordPage() {
               </button>
             </div>
 
-            {followUps.length === 0 ? (
-              <p className="empty">
-                No saved follow-ups yet.
-              </p>
-            ) : (
+            {followUps.length === 0 ? <p className="empty">No saved follow-ups yet.</p> : (
               <ol className="history">
                 {followUps.map((item) => {
                   const date = new Date(item.createdAt);
@@ -298,15 +235,8 @@ function RecordPage() {
               </ol>
             )}
           </>
-        ) : (
-          !loading &&
-          !error &&
-          api && (
-            <p className="empty">
-              This {config.entity} was not found. It may have been
-              deleted or may not have synced to this device.
-            </p>
-          )
+        ) : !loading && !error && api && (
+          <p className="empty">This {config.entity} was not found. It may have been deleted or may not have synced to this device.</p>
         )}
       </section>
     </>
@@ -315,38 +245,13 @@ function RecordPage() {
 
 export default function App() {
   return (
-    <div
-      className="app"
-      style={{
-        '--accent': config.accent,
-        '--background': config.background
-      }}
-    >
-      <a
-        className="skip-link"
-        href="#main-content"
-        onClick={(event) => {
-          event.preventDefault();
-          document
-            .getElementById('main-content')
-            ?.focus();
-        }}
-      >
-        Skip to content
-      </a>
+    <div className="app" style={{ '--accent': config.accent, '--background': config.background }}>
+      <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); document.getElementById('main-content')?.focus(); }}>Skip to content</a>
 
       <header className="site-header">
-        <Link
-          className="brand"
-          to="/"
-          aria-label="Community app home"
-        >
-          <img
-            src="./assets/ode-logo.png"
-            alt="Open Data Ensemble"
-          />
+        <Link className="brand" to="/" aria-label="Community app home">
+          <img src="./assets/ode-logo.png" alt="Open Data Ensemble" />
         </Link>
-
         <span>ODE Community Days 2026, Kampala</span>
       </header>
 
@@ -354,18 +259,10 @@ export default function App() {
         <section className="hero" aria-labelledby="app-title">
           <div>
             <p className="eyebrow">{config.theme}</p>
-
             <h1 id="app-title">{config.title}</h1>
-
             <p>{config.description}</p>
           </div>
-
-          <img
-            src="./assets/theme.svg"
-            alt=""
-            width="220"
-            height="180"
-          />
+          <img src="./assets/theme.svg" alt="" width="220" height="180" />
         </section>
 
         <Routes>
@@ -388,11 +285,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <footer>
-        Built together with Open Data Ensemble · Collect locally,
-        connect your community.
-      </footer>
+      <footer>Built together with Open Data Ensemble · Collect locally, connect your community.</footer>
     </div>
   );
 }
-

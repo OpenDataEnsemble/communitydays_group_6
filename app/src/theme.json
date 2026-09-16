@@ -7,9 +7,9 @@
   "followUpLabel": "Record a place visit",
   "registrationForm": "group_6_registration",
   "followUpForm": "group_6_followup",
-  "description": "Explore, connect, and learn about the places that make Kampala our community.",
-  "accent": "#1769AA",
-  "background": "#F1F7FC",
+  "description": "Explore, Connect and Learn about places that make Kampala our Community",
+  "accent": "#FACC15",
+  "background": "#F1F1F1",
   "columns": [
     {
       "key": "name",
@@ -25,22 +25,22 @@
     }
   ],
   "registrationFields": [
-  {
-    "key": "name",
-    "label": "Place name"
-  },
-  {
-    "key": "neighbourhood",
-    "label": "Neighbourhood"
-  },
-  {
-    "key": "kind",
-    "label": "Type of place"
-  },
-  {
-    "key": "description",
-    "label": "Short description"
-  }
+    {
+      "key": "name",
+      "label": "Place name"
+    },
+    {
+      "key": "neighbourhood",
+      "label": "Neighbourhood"
+    },
+    {
+      "key": "kind",
+      "label": "Type of place"
+    },
+    {
+      "key": "description",
+      "label": "Short description"
+    }
   ],
     "followUpFields": [
     {
