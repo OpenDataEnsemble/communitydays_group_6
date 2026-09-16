@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Routes, useParams } from 'react-router-dom';
 import config from './theme.json';
@@ -15,13 +16,18 @@ function Fields({ fields, data }) {
   return (
     <dl className="fields">
       {fields.map(({ key, label }) => (
-        <div key={key}><dt>{label}</dt><dd>{display(data?.[key])}</dd></div>
+        <div key={key}>
+          <dt>{label}</dt>
+          <dd>{display(data?.[key])}</dd>
+        </div>
       ))}
     </dl>
   );
 }
 
 function RecordPage() {
+  const [searchTerm, setSearchTerm] = useState('');
+
   const { entityId } = useParams();
   const { api, registrations, followUps, loading, error, formError, opening, refresh, openForm } = useObservations(entityId);
   const [searchTerm, setSearchTerm] = useState("");
@@ -40,40 +46,88 @@ function RecordPage() {
   );
 
   useEffect(() => {
-    document.title = entityId ? `${config.entity} details · ${config.title}` : config.title;
+    document.title = entityId
+      ? `${config.entity} details · ${config.title}`
+      : config.title;
+
     document.getElementById('page-heading')?.focus();
   }, [entityId]);
 
   return (
     <>
-      {entityId && <Link className="back-link" to="/">← All {config.plural}</Link>}
+      {entityId && (
+        <Link className="back-link" to="/">
+          ← All {config.plural}
+        </Link>
+      )}
+
       <section className="panel" aria-labelledby="page-heading">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">{entityId ? config.entity : 'Your community'}</p>
-            <h2 id="page-heading" tabIndex={-1}>{entityId ? display(record?.data?.name || `${config.entity} details`) : config.plural}</h2>
+            <p className="eyebrow">
+              {entityId ? config.entity : 'Your community'}
+            </p>
+
+            <h2 id="page-heading" tabIndex={-1}>
+              {entityId
+                ? display(
+                    record?.data?.name ||
+                      `${config.entity} details`
+                  )
+                : config.plural}
+            </h2>
           </div>
+
           {!entityId && (
-            <button disabled={disabled} onClick={() => openForm(config.registrationForm)}>
+            <button
+              disabled={disabled}
+              onClick={() => openForm(config.registrationForm)}
+            >
               {opening ? 'Form open…' : config.registerLabel}
             </button>
           )}
         </div>
 
         <div className="data-status">
-          <span role="status">{loading ? 'Refreshing saved observations…' : `${registrations.length} saved ${config.plural}`}</span>
-          <button className="secondary" disabled={loading || opening} onClick={refresh}>Refresh</button>
+          <span role="status">
+            {loading
+              ? 'Refreshing saved observations…'
+              : `${registrations.length} saved ${config.plural}`}
+          </span>
+
+          <button
+            className="secondary"
+            disabled={loading || opening}
+            onClick={refresh}
+          >
+            Refresh
+          </button>
         </div>
 
         {!api && (
-          <p className="notice">Open this app in Formulus or ODE Desktop to view and collect data. This browser preview does not contain sample data.</p>
+          <p className="notice">
+            Open this app in Formulus or ODE Desktop to view and collect
+            data. This browser preview does not contain sample data.
+          </p>
         )}
 
         {error && (
           <div className="error" role="alert">
             <p>Could not refresh observations. {error}</p>
-            {(registrations.length > 0 || followUps.length > 0) && <p>Previously loaded data is shown; it may be out of date.</p>}
-            <button className="secondary" disabled={loading} onClick={refresh}>Retry</button>
+
+            {(registrations.length > 0 || followUps.length > 0) && (
+              <p>
+                Previously loaded data is shown; it may be out of date.
+              </p>
+            )}
+
+            <button
+              className="secondary"
+              disabled={loading}
+              onClick={refresh}
+            >
+              Retry
+            </button>
           </div>
         )}
 
@@ -137,7 +191,17 @@ function RecordPage() {
 
             <div className="section-heading history-heading">
               <h3>Follow-up history</h3>
-              <button disabled={disabled || loading || Boolean(error)} onClick={() => openForm(config.followUpForm, { entity_id: record.observationId })}>
+
+              <button
+                disabled={
+                  disabled || loading || Boolean(error)
+                }
+                onClick={() =>
+                  openForm(config.followUpForm, {
+                    entity_id: record.observationId
+                  })
+                }
+              >
                 {opening ? 'Form open…' : config.followUpLabel}
               </button>
             </div>
@@ -146,11 +210,24 @@ function RecordPage() {
               <ol className="history">
                 {followUps.map((item) => {
                   const date = new Date(item.createdAt);
+
                   return (
                     <li key={item.observationId}>
                       <article>
-                        <h4>{Number.isNaN(date.getTime()) ? 'Saved follow-up' : <time dateTime={date.toISOString()}>{date.toLocaleString()}</time>}</h4>
-                        <Fields fields={config.followUpFields} data={item.data} />
+                        <h4>
+                          {Number.isNaN(date.getTime()) ? (
+                            'Saved follow-up'
+                          ) : (
+                            <time dateTime={date.toISOString()}>
+                              {date.toLocaleString()}
+                            </time>
+                          )}
+                        </h4>
+
+                        <Fields
+                          fields={config.followUpFields}
+                          data={item.data}
+                        />
                       </article>
                     </li>
                   );
@@ -190,8 +267,21 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<RecordPage />} />
-          <Route path="/details/:entityId" element={<RecordPage />} />
-          <Route path="*" element={<section className="panel"><h2>Page not found</h2><Link to="/">Return home</Link></section>} />
+
+          <Route
+            path="/details/:entityId"
+            element={<RecordPage />}
+          />
+
+          <Route
+            path="*"
+            element={
+              <section className="panel">
+                <h2>Page not found</h2>
+                <Link to="/">Return home</Link>
+              </section>
+            }
+          />
         </Routes>
       </main>
 

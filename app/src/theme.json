@@ -42,7 +42,7 @@
       "label": "Short description"
     }
   ],
-  "followUpFields": [
+    "followUpFields": [
     {
       "key": "activity",
       "label": "How busy is it?"
